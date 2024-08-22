@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
@@ -37,8 +39,9 @@ fun TicTacToeScreen() {
         modifier = Modifier
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center // Aligns everything in the center vertically
     ) {
+        // Game Title
         Text(
             modifier = Modifier
                 .padding(bottom = 20.dp),
@@ -46,6 +49,8 @@ fun TicTacToeScreen() {
             fontSize = 30.sp,
             textAlign = TextAlign.Center,
         )
+
+        // Game Field
         GameField(
             board = board,
             onCellClick = { row, column ->
@@ -58,7 +63,17 @@ fun TicTacToeScreen() {
             },
             endGame = endGame
         )
+
+        // Add a spacer to create space between the GameField and EndGamePhase
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // End Game Phase
         EndGamePhase(board, endGame, currentPlayer)
+
+        // Add another spacer to create space between EndGamePhase and the RestartButton
+        Spacer(modifier = Modifier.height(24.dp))
+
+        // Restart Button
         RestartButton(onClick = {
             board = List(3) { List(3) { "" } }
             endGame = false
