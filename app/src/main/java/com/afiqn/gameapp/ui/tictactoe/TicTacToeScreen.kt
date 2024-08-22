@@ -30,13 +30,17 @@ import androidx.compose.ui.unit.sp
 import com.afiqn.gameapp.ui.theme.AppTheme
 
 @Composable
-fun TicTacToeScreen() {
-    var board by rememberSaveable{ mutableStateOf(List(3) { List(3) { "" } }) }
-    var currentPlayer by rememberSaveable { mutableStateOf("X") }
-    var endGame by rememberSaveable { mutableStateOf(false) }
-
+fun TicTacToeScreen(
+    modifier: Modifier = Modifier,
+    currentBoard: List<List<String>>,
+    player: String,
+    endGame: Boolean,
+    onBoardUpdate: (List<List<String>>) -> Unit,
+    onPlayerChange: (String) -> Unit,
+    onEndGameUpdate: (Boolean) -> Unit
+) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center // Aligns everything in the center vertically
@@ -52,13 +56,13 @@ fun TicTacToeScreen() {
 
         // Game Field
         GameField(
-            board = board,
+            board = currentBoard,
             onCellClick = { row, column ->
-                val clicked = onCellClick(board, row, column, currentPlayer)
-                board = clicked.first
-                endGame = clicked.second
-                if (!endGame) {
-                    currentPlayer = if (currentPlayer == "X") "O" else "X"
+                val clicked = onCellClick(currentBoard, row, column, player)
+                onBoardUpdate(clicked.first)
+                onEndGameUpdate(clicked.second)
+                if (!clicked.second) {
+                    onPlayerChange(if (player == "X") "O" else "X")
                 }
             },
             endGame = endGame
@@ -68,16 +72,16 @@ fun TicTacToeScreen() {
         Spacer(modifier = Modifier.height(16.dp))
 
         // End Game Phase
-        EndGamePhase(board, endGame, currentPlayer)
+        EndGamePhase(currentBoard, endGame, player)
 
         // Add another spacer to create space between EndGamePhase and the RestartButton
         Spacer(modifier = Modifier.height(24.dp))
 
         // Restart Button
         RestartButton(onClick = {
-            board = List(3) { List(3) { "" } }
-            endGame = false
-            currentPlayer = "X"
+            onBoardUpdate(List(3) { List(3) { "" } })
+            onEndGameUpdate(false)
+            onPlayerChange("X")
         }, endGame = endGame)
     }
 }
@@ -160,7 +164,18 @@ fun DefaultPreview() {
         Surface(
             color = MaterialTheme.colorScheme.background
         ) {
-            TicTacToeScreen()
+            var board by rememberSaveable { mutableStateOf(List(3) { List(3) { "" } }) }
+            var currentPlayer by rememberSaveable { mutableStateOf("X") }
+            var endGame by rememberSaveable { mutableStateOf(false) }
+
+            TicTacToeScreen(
+                currentBoard = board,
+                player = currentPlayer,
+                onBoardUpdate = { newBoard -> board = newBoard },
+                onPlayerChange = { newPlayer -> currentPlayer = newPlayer },
+                onEndGameUpdate = { isEndGame -> endGame = isEndGame },
+                endGame = endGame
+            )
         }
     }
 }

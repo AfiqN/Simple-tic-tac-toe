@@ -16,4 +16,4 @@ data object VsAI : GameOption {
     override val route = "vsAI"
 }
 
-val GameOptionScreen = listOf(LandingPage, VsPlayer, VsAI)
+val gameAppScreen = listOf(LandingPage, VsPlayer, VsAI)

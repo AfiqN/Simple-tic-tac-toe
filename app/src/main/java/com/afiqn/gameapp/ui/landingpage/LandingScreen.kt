@@ -11,13 +11,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,19 +26,38 @@ import com.afiqn.gameapp.R
 import com.afiqn.gameapp.ui.theme.AppTheme
 
 @Composable
-fun LandingScreen() {
+fun LandingScreen(
+    modifier: Modifier = Modifier,
+    onCLickVsPlayer: () -> Unit = {},
+    onClickVsAI: () -> Unit = {}
+) {
+    GameOptionNav(
+        modifier = modifier,
+        onCLickVsPlayer = onCLickVsPlayer,
+        onClickVsAI = onClickVsAI
+    )
+}
+
+@Composable
+fun GameOptionNav(
+    modifier: Modifier = Modifier,
+    onCLickVsPlayer: () -> Unit = {},
+    onClickVsAI: () -> Unit = {}
+) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize(),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
         OptionButton(
+            onClickOption = onCLickVsPlayer,
             text = "Vs Player",
             icon = painterResource(id = R.drawable.ic_player)
         )
         Spacer(modifier = Modifier.size(24.dp))
         OptionButton(
+            onClickOption = onClickVsAI,
             text = "Vs AI",
             icon = painterResource(id = R.drawable.ic_computer)
         )
@@ -48,17 +67,17 @@ fun LandingScreen() {
 @Composable
 fun OptionButton(
     modifier: Modifier = Modifier,
-    onClick: () -> Unit = {},
+    onClickOption: () -> Unit = {},
     text: String,
     icon: Painter? = null
 ) {
     Box(
         modifier = modifier
             .size(90.dp)
-            .clickable { onClick() }
+            .clickable { onClickOption() }
             .border(
                 1.dp,
-                Color.Black,
+                MaterialTheme.colorScheme.scrim,
                 Shapes().medium
             )
             .clip(Shapes().medium),

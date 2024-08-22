@@ -2,6 +2,7 @@ package com.afiqn.gameapp
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -16,11 +17,14 @@ fun GameNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = VsPlayer.route,
+        startDestination = LandingPage.route,
         modifier = modifier
     ) {
         composable(route = LandingPage.route) {
-            LandingScreen()
+            LandingScreen(
+                onCLickVsPlayer = { navController.navigateSingleTopTo(VsPlayer.route) },
+                onClickVsAI = { navController.navigateSingleTopTo(VsAI.route) }
+            )
         }
         composable(route = VsPlayer.route) {
             VsPlayerScreen()
@@ -30,3 +34,15 @@ fun GameNavHost(
         }
     }
 }
+
+fun NavHostController.navigateSingleTopTo(route: String) =
+    this.navigate(route) {
+        popUpTo(
+            this@navigateSingleTopTo.graph.findStartDestination().id
+        ) {
+            saveState = true
+        }
+
+        launchSingleTop = true
+        restoreState = true
+    }
