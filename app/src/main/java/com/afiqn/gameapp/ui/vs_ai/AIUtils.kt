@@ -1,6 +1,6 @@
 package com.afiqn.gameapp.ui.vs_ai
 
-import kotlin.random.Random
+import com.afiqn.gameapp.ui.tictactoe.winningCondition
 
 
 fun updateBoard(
@@ -20,25 +20,18 @@ fun updateBoard(
     }
 }
 
-fun easyAI(
-    board: List<List<String>>,
-    player: String
-): List<List<String>> {
-    val emptyCells = mutableListOf<Pair<Int, Int>>()
-
-    board.mapIndexed { rowIndex, rows ->
-        rows.mapIndexed { colIndex, cell ->
-            if (cell.isEmpty()) {
-                emptyCells.add(Pair(rowIndex, colIndex))
-            }
-        }
+fun evaluateBoard(board: List<List<String>>, player: String): Int {
+    // Check for winning conditions
+    return if (winningCondition(board, player)) {
+        1
+    } else if (winningCondition(board, if (player == "X") "O" else "X")) {
+        -1
+    } else {
+        0
     }
+}
 
-    if (emptyCells.isNotEmpty()) {
-        val randomIndex = Random.nextInt(emptyCells.size)
-        val (row, col) = emptyCells[randomIndex]
-        return updateBoard(board, row, col, player)
-    }
-
-    return board
+fun isBoardFull(board: List<List<String>>): Boolean {
+    // Check if there are any empty cells left
+    return board.all { row -> row.all { cell -> cell.isNotEmpty() } }
 }

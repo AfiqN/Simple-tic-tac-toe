@@ -39,3 +39,44 @@ fun winningCondition(
 
     return checkRows(board, player) || checkColumns(board, player) || checkDiagonals(board, player)
 }
+
+fun checkWinningCell(
+    board: List<List<String>>, player: String
+): List<Pair<Int, Int>> {
+    val winningCells = mutableListOf<Pair<Int, Int>>()
+
+    // Cek baris
+    for (row in board.indices) {
+        if (board[row].all { it == player }) {
+            for (col in board[row].indices) {
+                winningCells.add(Pair(row, col))
+            }
+            break
+        }
+    }
+
+    // Cek kolom
+    for (col in board[0].indices) {
+        if (board.all { it[col] == player }) {
+            for (row in board.indices) {
+                winningCells.add(Pair(row, col))
+            }
+            break
+        }
+    }
+
+    // Cek diagonal
+    if (board.indices.all { index -> board[index][index] == player }) {
+        for (index in board.indices) {
+            winningCells.add(Pair(index, index))
+        }
+    }
+
+    if (board.indices.all { index -> board[index][2 - index] == player }) {
+        for (index in board.indices) {
+            winningCells.add(Pair(index, 2 - index))
+        }
+    }
+
+    return winningCells
+}

@@ -1,14 +1,14 @@
 package com.afiqn.gameapp.ui.tictactoe
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
@@ -41,21 +41,13 @@ fun TicTacToeScreen(
 ) {
     Column(
         modifier = modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center // Aligns everything in the center vertically
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
-        // Game Title
-        Text(
-            modifier = Modifier
-                .padding(bottom = 20.dp),
-            text = "Tic-tac-toe",
-            fontSize = 30.sp,
-            textAlign = TextAlign.Center,
-        )
-
-        // Game Field
         GameField(
+            modifier = Modifier.weight(1f),
             board = currentBoard,
             onCellClick = { row, column ->
                 val clicked = onCellClick(currentBoard, row, column, player)
@@ -65,63 +57,68 @@ fun TicTacToeScreen(
                     onPlayerChange(if (player == "X") "O" else "X")
                 }
             },
-            endGame = endGame
+            endGame = endGame,
+            player = player
         )
-
-        // Add a spacer to create space between the GameField and EndGamePhase
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // End Game Phase
-        EndGamePhase(currentBoard, endGame, player)
-
-        // Add another spacer to create space between EndGamePhase and the RestartButton
-        Spacer(modifier = Modifier.height(24.dp))
-
-        // Restart Button
-        RestartButton(onClick = {
-            onBoardUpdate(List(3) { List(3) { "" } })
-            onEndGameUpdate(false)
-            onPlayerChange("X")
-        }, endGame = endGame)
+        EndGamePhase(
+            modifier = Modifier.weight(0.5f),
+            currentBoard, endGame, player,
+            onClick = {
+                onBoardUpdate(List(3) { List(3) { "" } })
+                onEndGameUpdate(false)
+                onPlayerChange("X")
+            }
+        )
     }
 }
 
 
 
 @Composable
-fun EndGamePhase(board: List<List<String>>, endGame: Boolean, currentPlayer: String) {
-    if (endGame) {
-        val winningCondition = winningCondition(board, currentPlayer)
-        val message = if (winningCondition) "Player $currentPlayer won!" else "Draw"
+fun EndGamePhase(
+    modifier: Modifier = Modifier,
+    board: List<List<String>>,
+    endGame: Boolean,
+    currentPlayer: String,
+    onClick: () -> Unit
+) {
+    Column(
+        modifier = modifier
+            .padding(top = 16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween
+    ) {
+        if (endGame) {
+            val winningCondition = winningCondition(board, currentPlayer)
+            val message = if (winningCondition) "Player $currentPlayer won!" else "Draw!"
 
-        Text(
-            modifier = Modifier
-                .padding(top = 20.dp),
-            fontSize = 30.sp,
-            text = message
-        )
-    } else {
-        Text(
-            modifier = Modifier
-                .padding(top = 20.dp),
-            text = "Current player: $currentPlayer",
-            fontSize = 20.sp,
-            textAlign = TextAlign.Center
-        )
+            Text(
+                fontSize = 30.sp,
+                text = message
+            )
+            RestartButton(onClick = onClick)
+        } else {
+            Text(
+                text = "Current player: $currentPlayer",
+                fontSize = 20.sp,
+                textAlign = TextAlign.Center
+            )
+        }
     }
 }
 
 @Composable
 fun RestartButton(
-    onClick: () -> Unit,
-    endGame: Boolean
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
 ) {
-    if (endGame) {
-        Button(
-            onClick = onClick
-        ) {
-            Text(text = "Restart")
-        }
+    Button(
+        onClick = onClick,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 32.dp)
+    ) {
+        Text(text = "Restart")
     }
 }
 
@@ -130,10 +127,12 @@ fun GameField(
     modifier: Modifier = Modifier,
     board: List<List<String>>,
     onCellClick: (Int, Int) -> Unit = { _, _ -> },
-    endGame: Boolean
+    endGame: Boolean,
+    player: String
 ) {
     Column(
         modifier = modifier,
+        verticalArrangement = Arrangement.Bottom
     ) {
         for (row in 0..2) {
             Row {
@@ -146,14 +145,34 @@ fun GameField(
                                 if (board[row][column].isEmpty() && !endGame) {
                                     onCellClick(row, column)
                                 }
-                            },
-                        contentAlignment = Alignment.Center
+                            }
+                            .background(
+                                winningBoard(board, column, row, player)
+                            ),
+                        contentAlignment = Alignment.Center,
+
                     ) {
                         Text(text = board[row][column], fontSize = 24.sp)
                     }
                 }
             }
         }
+    }
+}
+
+@Composable
+fun winningBoard(
+    board: List<List<String>>,
+    col: Int,
+    row: Int,
+    player: String
+): Color {
+    val winningCells = checkWinningCell(board, player)
+    val celRow = Pair(row, col)
+    return if (celRow in winningCells) {
+        MaterialTheme.colorScheme.surfaceVariant
+    } else {
+        MaterialTheme.colorScheme.surface
     }
 }
 

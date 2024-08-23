@@ -17,7 +17,8 @@ fun VsAIScreen() {
 
     LaunchedEffect(board, currentPlayer) {
         if (currentPlayer == "O" && !endGame) {
-            board = easyAIBoard(board, currentPlayer)
+//            board = easyAIBoard(board, currentPlayer)
+            board = advancedAIBoard(board, currentPlayer)
             endGame =
                 winningCondition(board, currentPlayer) || (board.all { r -> r.all { it.isNotEmpty() } })
             currentPlayer = if (endGame) "O" else "X"
@@ -39,4 +40,11 @@ fun easyAIBoard(
     player: String
 ): List<List<String>> {
     return easyAI(board, player)
+}
+
+fun advancedAIBoard(
+    board: List<List<String>>,
+    player: String
+): List<List<String>> {
+    return advancedAI(board, player).second
 }
