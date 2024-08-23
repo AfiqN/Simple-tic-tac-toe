@@ -31,7 +31,7 @@ import com.afiqn.gameapp.R
 @Composable
 fun OptionButton(
     modifier: Modifier = Modifier,
-    onClickOption: () -> Unit = {},
+    onClickOption: (String) -> Unit = {},
     textTitle: String,
     textDesc: String,
     icon: Painter? = null
@@ -40,7 +40,7 @@ fun OptionButton(
         modifier = modifier
             .fillMaxWidth()
             .height(150.dp)
-            .clickable { onClickOption() }
+            .clickable { onClickOption("") }
             .border(
                 1.dp,
                 contentColorFor(backgroundColor = MaterialTheme.colorScheme.surface),

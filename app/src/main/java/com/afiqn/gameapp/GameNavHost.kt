@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.afiqn.gameapp.ui.gameoptions.AIOptionScreen
 import com.afiqn.gameapp.ui.gameoptions.OptionScreen
 import com.afiqn.gameapp.ui.landingpage.LandingScreen
 import com.afiqn.gameapp.ui.vs_ai.VsAIScreen
@@ -28,14 +29,29 @@ fun GameNavHost(
         composable(route = OptionPage.route) {
             OptionScreen(
                 onCLickVsPlayer = { navController.navigateSingleTopTo(VsPlayer.route) },
-                onClickVsAI = { navController.navigateSingleTopTo(VsAI.route) }
+                onClickVsAI = { navController.navigateSingleTopTo(AIOptionPage.route) }
+            )
+        }
+        composable(route = AIOptionPage.route) {
+            AIOptionScreen(
+                onCLickEasyAI = { level ->
+                    navController.navigateToVsAI(level)
+                },
+                onClickAdvancedAI = { level ->
+                    navController.navigateToVsAI(level)
+                }
             )
         }
         composable(route = VsPlayer.route) {
             VsPlayerScreen()
         }
-        composable(route = VsAI.route) {
-            VsAIScreen()
+        composable(
+            route = VsAI.routeWithArgs,
+            arguments = VsAI.arguments
+        ) { navBackStackEntry ->
+            val level =
+                navBackStackEntry.arguments?.getString(VsAI.optionArg)
+            VsAIScreen(level)
         }
     }
 }
@@ -49,3 +65,7 @@ fun NavHostController.navigateSingleTopTo(route: String) =
         launchSingleTop = true
         restoreState = true
     }
+
+fun NavHostController.navigateToVsAI(level: String) {
+    this.navigateSingleTopTo("${VsAI.route}/$level")
+}

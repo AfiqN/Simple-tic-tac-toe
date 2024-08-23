@@ -10,15 +10,18 @@ import com.afiqn.gameapp.ui.tictactoe.TicTacToeScreen
 import com.afiqn.gameapp.ui.tictactoe.winningCondition
 
 @Composable
-fun VsAIScreen() {
+fun VsAIScreen(level: String?) {
     var board by rememberSaveable { mutableStateOf(List(3) { List(3) { "" } }) }
     var currentPlayer by rememberSaveable { mutableStateOf("X") }
     var endGame by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(board, currentPlayer) {
         if (currentPlayer == "O" && !endGame) {
-//            board = easyAIBoard(board, currentPlayer)
-            board = advancedAIBoard(board, currentPlayer)
+            board = if (level == "easy") {
+                easyAIBoard(board, currentPlayer)
+            } else {
+                advancedAIBoard(board, currentPlayer)
+            }
             endGame =
                 winningCondition(board, currentPlayer) || (board.all { r -> r.all { it.isNotEmpty() } })
             currentPlayer = if (endGame) "O" else "X"

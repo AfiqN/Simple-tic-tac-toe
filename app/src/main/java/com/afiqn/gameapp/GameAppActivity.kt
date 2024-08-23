@@ -32,7 +32,7 @@ fun GameApp() {
         val currentBackStack by navController.currentBackStackEntryAsState()
         val currentDestination = currentBackStack?.destination
         val currentScreen =
-            gameAppScreen.find { it.route == currentDestination?.route } ?: LandingPage
+            gameAppScreen.find { currentDestination?.route?.startsWith(it.route) == true } ?: LandingPage
 
         AppScaffold(
             topBar = {

@@ -10,16 +10,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.afiqn.gameapp.AILevel
 import com.afiqn.gameapp.R
 import com.afiqn.gameapp.ui.components.ButtonLabel
 import com.afiqn.gameapp.ui.components.OptionButton
 
 @Composable
-fun OptionScreen(
+fun AIOptionScreen(
     modifier: Modifier = Modifier,
-    onCLickVsPlayer: (String) -> Unit = {},
-    onClickVsAI: (String) -> Unit = {}
+    onCLickEasyAI: (String) -> Unit = {},
+    onClickAdvancedAI: (String) -> Unit = {}
 ) {
     Column(
         modifier = modifier
@@ -28,31 +30,37 @@ fun OptionScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        ButtonLabel(textLabel = "Choose your opponent!")
-        GameOptionNav(
-            onCLickVsPlayer = onCLickVsPlayer,
-            onClickVsAI = onClickVsAI
+        ButtonLabel(textLabel = "Are you tough enough?")
+        AIOptionNav(
+            onCLickEasyAI = { onCLickEasyAI(AILevel.easy) },
+            onClickAdvancedAI = { onClickAdvancedAI(AILevel.advanced) }
         )
         Spacer(modifier = Modifier.size(48.dp))
     }
 }
 
 @Composable
-fun GameOptionNav(
-    onCLickVsPlayer: (String) -> Unit = {},
-    onClickVsAI: (String) -> Unit = {}
+fun AIOptionNav(
+    onCLickEasyAI: (String) -> Unit = {},
+    onClickAdvancedAI: (String) -> Unit = {}
 ) {
     OptionButton(
-        onClickOption = onCLickVsPlayer,
-        textTitle = "Vs Player",
-        textDesc = "Challenge a friend or opponent to a duel",
-        icon = painterResource(id = R.drawable.ic_player)
+        onClickOption = onCLickEasyAI,
+        textTitle = "Easy",
+        textDesc = "For beginners",
+        icon = painterResource(id = R.drawable.ic_robot)
     )
     Spacer(modifier = Modifier.size(24.dp))
     OptionButton(
-        onClickOption = onClickVsAI,
-        textTitle = "Vs AI",
-        textDesc = "Test your skills against AI opponent",
-        icon = painterResource(id = R.drawable.ic_computer)
+        onClickOption = onClickAdvancedAI,
+        textTitle = "Impossible",
+        textDesc = "Only for the brave",
+        icon = painterResource(id = R.drawable.ic_ai)
     )
+}
+
+@Preview (showBackground = true)
+@Composable
+fun AIOptionScreenPreview() {
+    AIOptionScreen()
 }
