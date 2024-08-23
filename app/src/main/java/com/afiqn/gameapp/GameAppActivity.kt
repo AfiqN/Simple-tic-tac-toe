@@ -26,19 +26,21 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun GameApp() {
-    val navController = rememberNavController()
-    val currentBackStack by navController.currentBackStackEntryAsState()
-    val currentDestination = currentBackStack?.destination
-    val currentScreen =
-        gameAppScreen.find { it.route == currentDestination?.route } ?: LandingPage
+    AppTheme {
+        val navController = rememberNavController()
+        val currentBackStack by navController.currentBackStackEntryAsState()
+        val currentDestination = currentBackStack?.destination
+        val currentScreen =
+            gameAppScreen.find { it.route == currentDestination?.route } ?: LandingPage
 
-    Scaffold(
+        Scaffold(
 
-    ){ innerPadding ->
-        GameNavHost(
-            navController = navController,
-            modifier = Modifier.padding(innerPadding)
-        )
+        ){ innerPadding ->
+            GameNavHost(
+                navController = navController,
+                modifier = Modifier.padding(innerPadding)
+            )
+        }
     }
 }
 
