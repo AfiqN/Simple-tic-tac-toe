@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">GameApp</string>
-    <string name="landing_decs">This is a simple Tic Tac Toe app\nyou can play the computer\nor your best friend!</string>
+    <string name="landing_decs">Grab a friend or challenge\nyourself against our AI. Perfect for\na quick game or an epic showdown!</string>
 </resources>

@@ -1,5 +1,15 @@
 package com.afiqn.gameapp.ui.tictactoe
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.Color
+
 fun onCellClick(
     currentBoard: List<List<String>>,
     row: Int,
@@ -79,4 +89,38 @@ fun checkWinningCell(
     }
 
     return winningCells
+}
+
+@Composable
+fun winningBoard(
+    board: List<List<String>>,
+    col: Int,
+    row: Int,
+    player: String,
+    endGame: Boolean
+): Color {
+    val colorScheme = MaterialTheme.colorScheme
+
+    val (targetColor, setTargetColor) = remember { mutableStateOf(colorScheme.surface) }
+    val animatedColor by animateColorAsState(
+        targetValue = targetColor,
+        animationSpec = tween(durationMillis = 1000),
+        label = "animate background color"
+    )
+
+    LaunchedEffect(endGame, player) {
+        if (endGame) {
+            setTargetColor(colorScheme.surfaceVariant)
+        } else {
+            setTargetColor(colorScheme.surface)
+        }
+    }
+
+    val winningCells = checkWinningCell(board, player)
+    val celRow = Pair(row, col)
+    return if (celRow in winningCells) {
+        animatedColor
+    } else {
+        colorScheme.surface
+    }
 }

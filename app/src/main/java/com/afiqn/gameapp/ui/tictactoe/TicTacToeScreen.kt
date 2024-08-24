@@ -1,5 +1,11 @@
 package com.afiqn.gameapp.ui.tictactoe
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -12,7 +18,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -35,19 +42,26 @@ fun TicTacToeScreen(
     currentBoard: List<List<String>>,
     player: String,
     endGame: Boolean,
+    textGameMode: String,
     onBoardUpdate: (List<List<String>>) -> Unit,
     onPlayerChange: (String) -> Unit,
-    onEndGameUpdate: (Boolean) -> Unit
+    onEndGameUpdate: (Boolean) -> Unit,
+    changeSide: @Composable () -> Unit = {}
 ) {
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
+        InformationPanel(
+            modifier = Modifier.weight(0.5f),
+            textMode = textGameMode,
+            changeSide = changeSide
+        )
         GameField(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier,
             board = currentBoard,
             onCellClick = { row, column ->
                 val clicked = onCellClick(currentBoard, row, column, player)
@@ -72,7 +86,35 @@ fun TicTacToeScreen(
     }
 }
 
-
+@Composable
+fun InformationPanel(
+    modifier: Modifier = Modifier,
+    textMode: String,
+    changeSide: @Composable () -> Unit = {}
+) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(bottom = 16.dp),
+        verticalArrangement = Arrangement.SpaceBetween,
+    ) {
+        changeSide()
+        Row (
+            modifier = Modifier.weight(1f),
+            verticalAlignment = Alignment.Bottom
+        ) {
+            Text(
+                text = "Game mode:",
+                fontSize = 16.sp
+            )
+            Text(
+                text = " $textMode",
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp
+            )
+        }
+    }
+}
 
 @Composable
 fun EndGamePhase(
@@ -116,9 +158,11 @@ fun RestartButton(
         onClick = onClick,
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 32.dp)
     ) {
-        Text(text = "Restart")
+        Text(
+            text = "Restart",
+            fontWeight = FontWeight.Bold
+        )
     }
 }
 
@@ -137,42 +181,36 @@ fun GameField(
         for (row in 0..2) {
             Row {
                 for (column in 0..2) {
+                    val clicked = board[row][column].isNotEmpty()
+
                     Box(
                         modifier = Modifier
                             .size(100.dp)
                             .border(2.dp, Color.Gray)
                             .clickable {
-                                if (board[row][column].isEmpty() && !endGame) {
+                                if (!clicked && !endGame) {
                                     onCellClick(row, column)
                                 }
                             }
                             .background(
-                                winningBoard(board, column, row, player)
+                                winningBoard(board, column, row, player, endGame)
                             ),
                         contentAlignment = Alignment.Center,
-
                     ) {
-                        Text(text = board[row][column], fontSize = 24.sp)
+                        this@Row.AnimatedVisibility(
+                            visible = clicked,
+                            enter = fadeIn(animationSpec = tween(500)) + scaleIn(initialScale = 0.8f, animationSpec = tween(500)),
+                            exit = fadeOut(animationSpec = tween(500)) + scaleOut(targetScale = 0.8f, animationSpec = tween(500))
+                        ) {
+                            Text(
+                                text = board[row][column],
+                                fontSize = 24.sp,
+                            )
+                        }
                     }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun winningBoard(
-    board: List<List<String>>,
-    col: Int,
-    row: Int,
-    player: String
-): Color {
-    val winningCells = checkWinningCell(board, player)
-    val celRow = Pair(row, col)
-    return if (celRow in winningCells) {
-        MaterialTheme.colorScheme.surfaceVariant
-    } else {
-        MaterialTheme.colorScheme.surface
     }
 }
 
@@ -181,7 +219,7 @@ fun winningBoard(
 fun DefaultPreview() {
     AppTheme {
         Surface(
-            color = MaterialTheme.colorScheme.background
+            color = colorScheme.background
         ) {
             var board by rememberSaveable { mutableStateOf(List(3) { List(3) { "" } }) }
             var currentPlayer by rememberSaveable { mutableStateOf("X") }
@@ -190,6 +228,7 @@ fun DefaultPreview() {
             TicTacToeScreen(
                 currentBoard = board,
                 player = currentPlayer,
+                textGameMode = "Player vs AI",
                 onBoardUpdate = { newBoard -> board = newBoard },
                 onPlayerChange = { newPlayer -> currentPlayer = newPlayer },
                 onEndGameUpdate = { isEndGame -> endGame = isEndGame },

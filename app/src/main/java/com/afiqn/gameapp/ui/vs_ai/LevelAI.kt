@@ -27,6 +27,16 @@ fun easyAI(
 
 fun advancedAI(board: List<List<String>>, player: String): Pair<Int, List<List<String>>> {
     // Evaluate the board state
+    val isEmptyBoard = board.all { row -> row.all { it.isEmpty() } }
+
+    if (isEmptyBoard) {
+        // If the board is empty, make a random move
+        val randomRow = Random.nextInt(3)
+        val randomCol = Random.nextInt(3)
+        val newBoard = updateBoard(board, randomRow, randomCol, player)
+        return Pair(0, newBoard) // Return 0 as score since it's the first move
+    }
+
     val score = evaluateBoard(board, player)
 
     // If the game is over, return the score and the current board

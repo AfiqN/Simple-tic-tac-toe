@@ -16,6 +16,7 @@ fun VsPlayerScreen() {
     TicTacToeScreen(
         currentBoard = board,
         player = currentPlayer,
+        textGameMode = "Player vs Player",
         onBoardUpdate = { newBoard -> board = newBoard },
         onPlayerChange = { newPlayer -> currentPlayer = newPlayer },
         onEndGameUpdate = { isEndGame -> endGame = isEndGame },

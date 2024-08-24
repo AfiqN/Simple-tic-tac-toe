@@ -29,7 +29,8 @@ fun TopNav(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .fillMaxWidth()
-            .padding(24.dp)
+            .padding(horizontal = 24.dp)
+            .padding(top = 24.dp)
     ) {
         Icon(
             painter = painterResource(id = R.drawable.ic_back),

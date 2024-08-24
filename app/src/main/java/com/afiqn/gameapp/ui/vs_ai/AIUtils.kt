@@ -2,7 +2,6 @@ package com.afiqn.gameapp.ui.vs_ai
 
 import com.afiqn.gameapp.ui.tictactoe.winningCondition
 
-
 fun updateBoard(
     board: List<List<String>>,
     row: Int,
