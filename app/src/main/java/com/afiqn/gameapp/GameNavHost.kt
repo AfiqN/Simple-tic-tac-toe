@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.afiqn.gameapp.ui.gameoptions.AIOptionScreen
 import com.afiqn.gameapp.ui.gameoptions.OptionScreen
+import com.afiqn.gameapp.ui.landingpage.CreditScreen
 import com.afiqn.gameapp.ui.landingpage.LandingScreen
 import com.afiqn.gameapp.ui.vs_ai.VsAIScreen
 import com.afiqn.gameapp.ui.vs_player.VsPlayerScreen
@@ -23,8 +24,12 @@ fun GameNavHost(
     ) {
         composable(route = LandingPage.route) {
             LandingScreen(
-                onCLickStart = { navController.navigateSingleTopTo(OptionPage.route) }
+                onCLickStart = { navController.navigateSingleTopTo(OptionPage.route) },
+                onClickCredit = { navController.navigateSingleTopTo(CreditPage.route) }
             )
+        }
+        composable(route = CreditPage.route) {
+            CreditScreen()
         }
         composable(route = OptionPage.route) {
             OptionScreen(

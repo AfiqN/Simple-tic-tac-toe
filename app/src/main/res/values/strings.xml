@@ -1,4 +1,6 @@
 <resources>
-    <string name="app_name">GameApp</string>
+    <string name="app_name">Simple Tic-tac-toe</string>
     <string name="landing_decs">Grab a friend or challenge\nyourself against our AI. Perfect for\na quick game or an epic showdown!</string>
+    <string name="credit_desc_app">This application was created as a portfolio project by the author. It is a simple tic-tac-toe game featuring both player-vs-friend and player-vs-AI modes. The application is built using Android and Jetpack Compose. While the app is functional, it may still have some shortcomings. If you encounter any issues or have suggestions, please don\'t hesitate to contact me.</string>
+
 </resources>

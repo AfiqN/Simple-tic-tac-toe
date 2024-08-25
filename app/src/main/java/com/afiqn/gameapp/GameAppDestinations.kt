@@ -11,6 +11,10 @@ data object LandingPage : GameOption {
     override val route = "landingPage"
 }
 
+data object CreditPage : GameOption {
+    override val route = "creditPage"
+}
+
 data object OptionPage : GameOption {
     override val route = "optionPage"
 }
@@ -37,4 +41,4 @@ data object AILevel {
     const val advanced = "advanced"
 }
 
-val gameAppScreen = listOf(LandingPage, OptionPage, AIOptionPage, VsPlayer, VsAI)
+val gameAppScreen = listOf(LandingPage, CreditPage, OptionPage, AIOptionPage, VsPlayer, VsAI)

@@ -7,12 +7,16 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.afiqn.gameapp.ui.components.AppScaffold
 import com.afiqn.gameapp.ui.components.TopNav
+import com.afiqn.gameapp.ui.landingpage.SplashScreen
 import com.afiqn.gameapp.ui.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,7 +24,15 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            GameApp()
+            var showLandingScreen by remember {
+                mutableStateOf(true)
+            }
+
+            if (showLandingScreen) {
+                SplashScreen(onTimeout = { showLandingScreen = false })
+            } else {
+                GameApp()
+            }
         }
     }
 }

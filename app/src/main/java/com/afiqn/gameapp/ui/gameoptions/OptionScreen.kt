@@ -44,7 +44,7 @@ fun GameOptionNav(
 ) {
     OptionButton(
         onClickOption = onCLickVsPlayer,
-        textTitle = "Vs Player",
+        textTitle = "Vs Friend",
         textDesc = "Challenge a friend or opponent to a duel",
         icon = painterResource(id = R.drawable.ic_player)
     )
