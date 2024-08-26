@@ -35,7 +35,7 @@ This application was created as a portfolio project by the author. It is a simpl
 
 ### Download APK
 
-1. Go to the [Releases](https://github.com/yourusername/your-repo-name/releases) page of this repository.
+1. Go to the [Releases](https://github.com/AfiqN/simple-tictactoe/releases) page of this repository.
 2. Find the latest release and download the APK file attached to it.
 3. Enable "Unknown Sources" to allow installation of apps from sources other than the Play Store.
 4. Open the downloaded APK file on your device to install the app.
