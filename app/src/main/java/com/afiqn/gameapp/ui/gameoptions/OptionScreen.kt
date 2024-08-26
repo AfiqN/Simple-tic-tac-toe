@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.afiqn.gameapp.R
 import com.afiqn.gameapp.ui.components.ButtonLabel
@@ -28,7 +29,7 @@ fun OptionScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        ButtonLabel(textLabel = "Choose your opponent!")
+        ButtonLabel(textLabel = stringResource(R.string.choose_your_opponent))
         GameOptionNav(
             onCLickVsPlayer = onCLickVsPlayer,
             onClickVsAI = onClickVsAI
@@ -44,15 +45,15 @@ fun GameOptionNav(
 ) {
     OptionButton(
         onClickOption = onCLickVsPlayer,
-        textTitle = "Vs Friend",
-        textDesc = "Challenge a friend or opponent to a duel",
+        textTitle = stringResource(R.string.vs_friend),
+        textDesc = stringResource(R.string.vs_friend_message),
         icon = painterResource(id = R.drawable.ic_player)
     )
     Spacer(modifier = Modifier.size(24.dp))
     OptionButton(
         onClickOption = onClickVsAI,
-        textTitle = "Vs AI",
-        textDesc = "Test your skills against AI opponent",
+        textTitle = stringResource(R.string.vs_ai),
+        textDesc = stringResource(R.string.vs_ai_message),
         icon = painterResource(id = R.drawable.ic_computer)
     )
 }

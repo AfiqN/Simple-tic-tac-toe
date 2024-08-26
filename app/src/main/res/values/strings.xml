@@ -2,5 +2,30 @@
     <string name="app_name">Simple Tic-tac-toe</string>
     <string name="landing_decs">Grab a friend or challenge\nyourself against our AI. Perfect for\na quick game or an epic showdown!</string>
     <string name="credit_desc_app">This application was created as a portfolio project by the author. It is a simple tic-tac-toe game featuring both player-vs-friend and player-vs-AI modes. The application is built using Android and Jetpack Compose. While the app is functional, it may still have some shortcomings. If you encounter any issues or have suggestions, please don\'t hesitate to contact me.</string>
+    <string name="emptyString" />
+    <string name="mailto">mailto:%1$s</string>
+    <string name="button">Button</string>
+    <string name="choose_your_side">Choose your side:</string>
+    <string name="play_as">Play as %1$s</string>
+    <string name="play_as_x">Play as X</string>
+    <string name="play_as_o">Play as O</string>
+    <string name="tic_tac_toe">Tic-Tac-Toe</string>
+    <string name="are_you_tough_enough">Are you tough enough?</string>
+    <string name="easy">Easy</string>
+    <string name="for_beginners">For beginners</string>
+    <string name="impossible">Impossible</string>
+    <string name="only_for_the_brave">Only for the brave</string>
+    <string name="choose_your_opponent">Choose your opponent!</string>
+    <string name="vs_friend">Vs Friend</string>
+    <string name="vs_friend_message">Challenge a friend or opponent to a duel</string>
+    <string name="vs_ai">Vs AI</string>
+    <string name="vs_ai_message">Test your skills against AI opponent</string>
+    <string name="credit">Credit:</string>
+    <string name="copyright">©2024 ❤️</string>
+    <string name="let_s_begin">Let\'s begin!</string>
+    <string name="game_mode">Game mode:</string>
+    <string name="restart">Restart</string>
+    <string name="player_vs_ai">Player vs AI</string>
+    <string name="player_vs_player">Player vs Player</string>
 
 </resources>

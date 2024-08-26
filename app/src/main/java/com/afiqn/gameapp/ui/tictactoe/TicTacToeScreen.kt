@@ -29,11 +29,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.afiqn.gameapp.R
 import com.afiqn.gameapp.ui.theme.AppTheme
 
 @Composable
@@ -104,7 +106,7 @@ fun InformationPanel(
             verticalAlignment = Alignment.Bottom
         ) {
             Text(
-                text = "Game mode:",
+                text = stringResource(R.string.game_mode),
                 fontSize = 16.sp
             )
             Text(
@@ -160,7 +162,7 @@ fun RestartButton(
             .fillMaxWidth()
     ) {
         Text(
-            text = "Restart",
+            text = stringResource(R.string.restart),
             fontWeight = FontWeight.Bold
         )
     }
@@ -228,7 +230,7 @@ fun DefaultPreview() {
             TicTacToeScreen(
                 currentBoard = board,
                 player = currentPlayer,
-                textGameMode = "Player vs AI",
+                textGameMode = stringResource(R.string.player_vs_ai),
                 onBoardUpdate = { newBoard -> board = newBoard },
                 onPlayerChange = { newPlayer -> currentPlayer = newPlayer },
                 onEndGameUpdate = { isEndGame -> endGame = isEndGame },

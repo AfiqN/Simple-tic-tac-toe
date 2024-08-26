@@ -11,7 +11,6 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.afiqn.gameapp.R
 import kotlinx.coroutines.delay
@@ -33,11 +32,5 @@ fun SplashScreen(onTimeout: () -> Unit, modifier: Modifier = Modifier) {
             contentDescription = null
         )
     }
-}
-
-@Preview (showBackground = true)
-@Composable
-fun SplashScreenPreview() {
-    SplashScreen(onTimeout = {})
 }
 

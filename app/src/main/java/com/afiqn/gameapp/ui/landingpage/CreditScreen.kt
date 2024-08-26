@@ -17,7 +17,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.afiqn.gameapp.R
-import com.afiqn.gameapp.ui.components.ListCreditEmail
 import com.afiqn.gameapp.ui.components.ListCreditUrl
 
 @Composable
@@ -29,7 +28,7 @@ fun CreditScreen() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Credit:",
+            text = stringResource(R.string.credit),
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .fillMaxWidth()
@@ -43,7 +42,7 @@ fun CreditScreen() {
         )
         Spacer(Modifier.weight(1f))
         Text(
-            text = "©2024 ❤️",
+            text = stringResource(R.string.copyright),
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
         )
@@ -83,25 +82,16 @@ fun CreditInformation(
 
             ListCreditUrl(
                 modifier = Modifier.padding(top = 8.dp),
-                icon = painterResource(id = R.drawable.ic_linkedin),
-                text = "Ahmad Taufiq Nur Rohman",
-                uri = "https://www.linkedin.com/in/afiqnur/",
-                context = LocalContext.current
-            )
-
-            ListCreditUrl(
-                modifier = Modifier.padding(top = 8.dp),
                 icon = painterResource(id = R.drawable.ic_github),
                 text = "AfiqN",
                 uri = "https://github.com/AfiqN",
                 context = LocalContext.current
             )
-
-            ListCreditEmail(
+            ListCreditUrl(
                 modifier = Modifier.padding(top = 8.dp),
-                icon = painterResource(id = R.drawable.ic_email),
-                text = "afiq20030602@gmail.com",
-                email = "afiq20030602@gmail.com",
+                icon = painterResource(id = R.drawable.ic_x),
+                text = "dkxkdn__",
+                uri = "https://x.com/dkxkdn__",
                 context = LocalContext.current
             )
         }

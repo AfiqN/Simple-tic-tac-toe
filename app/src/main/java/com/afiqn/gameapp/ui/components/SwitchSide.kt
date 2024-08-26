@@ -11,6 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.afiqn.gameapp.R
 
 @Composable
 fun SwitchSide(
@@ -25,13 +27,13 @@ fun SwitchSide(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = "Choose your side:"
+            text = stringResource(R.string.choose_your_side)
         )
         Box {
             OutlinedButton(
                 onClick = { onExpandedChange(true) }
             ) {
-                Text(text = "Play as $selectedSide")
+                Text(text = stringResource(R.string.play_as, selectedSide))
             }
 
             // Dropdown Menu
@@ -40,14 +42,14 @@ fun SwitchSide(
                 onDismissRequest = { onExpandedChange(false) }
             ) {
                 DropdownMenuItem(
-                    text = { Text("Play as X") },
+                    text = { Text(stringResource(R.string.play_as_x)) },
                     onClick = {
                         onSelectedSideChange("X")
                         onExpandedChange(false)
                     },
                 )
                 DropdownMenuItem(
-                    text = { Text("Play as O") },
+                    text = { Text(stringResource(R.string.play_as_o)) },
                     onClick = {
                         onSelectedSideChange("O")
                         onExpandedChange(false)

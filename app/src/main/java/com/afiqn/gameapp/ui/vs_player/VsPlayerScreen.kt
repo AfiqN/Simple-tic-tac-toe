@@ -5,6 +5,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
+import com.afiqn.gameapp.R
 import com.afiqn.gameapp.ui.tictactoe.TicTacToeScreen
 
 @Composable
@@ -16,7 +18,7 @@ fun VsPlayerScreen() {
     TicTacToeScreen(
         currentBoard = board,
         player = currentPlayer,
-        textGameMode = "Player vs Player",
+        textGameMode = stringResource(R.string.player_vs_player),
         onBoardUpdate = { newBoard -> board = newBoard },
         onPlayerChange = { newPlayer -> currentPlayer = newPlayer },
         onEndGameUpdate = { isEndGame -> endGame = isEndGame },

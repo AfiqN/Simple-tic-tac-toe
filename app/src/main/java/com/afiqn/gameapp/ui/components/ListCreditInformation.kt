@@ -15,9 +15,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import com.afiqn.gameapp.R
 
 @Composable
 fun ListCreditUrl(
@@ -65,7 +67,7 @@ private fun ListCreditInformation(
         ) {
             Icon(
                 painter = icon,
-                contentDescription = "",
+                contentDescription = stringResource(R.string.emptyString),
                 modifier = Modifier.size(20.dp)
             )
         }
@@ -86,7 +88,7 @@ private fun intentUriText(uri: String, context: Context) {
 
 private fun intentEmailText(email: String, context: Context) {
     val intent = Intent(Intent.ACTION_SENDTO).apply {
-        data = Uri.parse(/* uriString = */ "mailto:$email")
+        data = Uri.parse(context.getString(R.string.mailto, email))
     }
     context.startActivity(intent)
 }

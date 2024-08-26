@@ -78,7 +78,7 @@ fun LandingScreen(
                     .fillMaxWidth()
             ) {
                 Text(
-                    text = "Simple Tic-tac-toe",
+                    text = stringResource(id = R.string.app_name),
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp,
                     textAlign = TextAlign.Center,
@@ -108,7 +108,7 @@ fun LandingScreen(
             LandingScreenButton(
                 modifier = Modifier,
                 onClick = onCLickStart,
-                text = "Let's begin!"
+                text = stringResource(R.string.let_s_begin)
             )
         }
     }
